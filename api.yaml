@@ -1,0 +1,52 @@
+swagger: '2.0'
+info:
+  title: Club Management
+  version: 1.0.0
+securityDefinitions:
+  firebaseAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /clubs:
+    get:
+      security:
+        - firebaseAuth: []
+      summary: Get all clubs
+      operationId: getClub
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-google-backend:
+        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/clubs
+
+      responses:
+        '201':
+          description: Club retrieved successfully
+        '400':
+          description: Invalid request
+    post:
+      security:
+        - firebaseAuth: []
+      summary: Create a new club
+      operationId: createClub
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clubName
+          in: body
+          description: new club name
+          required: true
+          schema:
+            type: string
+      x-google-backend:
+        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/clubs
+
+      responses:
+        '201':
+          description: Club created successfully
+        '400':
+          description: Invalid request
