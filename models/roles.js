@@ -1,19 +1,28 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 
-const Sport = sequelize.define('Sport', {
+const Role = sequelize.define('Role', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true
     },
-    sportName: {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    model: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    operation: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 }, {
     // Define the table name explicitly
-    tableName: 'sports'
+    tableName: 'roles',
 });
 
-module.exports = Sport;
+
+module.exports = Role;

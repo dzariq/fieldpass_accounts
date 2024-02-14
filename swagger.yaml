@@ -1,0 +1,46 @@
+swagger: '2.0'
+info:
+  title: Club Management
+  version: 1.0.0
+securityDefinitions:
+  firebaseAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /accounts:
+    get:
+      description: get all account
+      responses:
+        200:
+          description: Success
+    post:
+      security:
+        - firebaseAuth: []
+      summary: Create a new account
+      operationId: createAccount
+      consumes:
+        - application/json
+      produces:
+        - /json
+      parameters:
+        - name: UID
+          in: body
+          description: UID of user
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: body
+          description: email of user
+          required: true
+          schema:
+            type: string
+      x-google-backend:
+        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/accounts
+      responses:
+        '201':
+           description: Account created successfully
+        '400':
+           description: Invalid request
+

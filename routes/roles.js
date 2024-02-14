@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Club = require('../models/clubs');
-const Country = require('../models/countries');
-const Sport = require('../models/sports');
+const Club = require('../models/accounts');
+const Country = require('../models/roles');
 const validateFirebaseToken = require('../middlewares/authValidator')
-const validateCreateClub = require('../middlewares/clubsValidator');
 const publishMessage = require('../pubsub/publish');
 
 /**
@@ -50,7 +48,7 @@ router.get('/', [validateFirebaseToken], (req, res) => {
  *       '400':
  *          description: Invalid request
 */
-router.post('/', [validateCreateClub, validateFirebaseToken], (req, res) => {
+router.post('/', [validateFirebaseToken], (req, res) => {
     const { clubName } = req.body;
     publishMessage();
     res.status(201).json({ message: 'Club created successfully' });

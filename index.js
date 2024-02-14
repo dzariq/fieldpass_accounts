@@ -8,7 +8,7 @@ const app = require('./app.js');
 const PORT = parseInt(parseInt(process.env.PORT)) || 8080;
 
 app.listen(PORT, () =>
-  console.log(`fieldpass-clubs listening on port ${PORT}`)
+  console.log(`fieldpass_accounts listening on port ${PORT}`)
 );
 // [END run_pubsub_server]
 // [END cloudrun_pubsub_server]
