@@ -1,2 +1,8 @@
-console.log(req.body)
-firestore.addDocument(req.body,'accounts', req.body.UID)
+function accountNewProcessor(data) {
+    console.log(data)
+    if (data) {
+        FIRESTORE.addDocument(data, 'accounts', data.uid)
+    }
+}
+
+module.exports = accountNewProcessor()
