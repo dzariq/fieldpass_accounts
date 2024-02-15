@@ -4,7 +4,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
-const accountNewProcessor = require('./pubsub/accountNewProcessor');
 
 //init service account google
 FIREBASE_ADMIN = require('firebase-admin');
@@ -16,6 +15,7 @@ FIREBASE_ADMIN.initializeApp({
 });
 //init service account google
 FIRESTORE = FIREBASE_ADMIN.firestore();
+require('./pubsub/accountNewProcessor');
 
 //message events subscriptions
 app.post('/', (req, res) => {
