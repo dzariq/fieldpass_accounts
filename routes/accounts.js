@@ -7,7 +7,7 @@ const publishMessage = require('../pubsub/publish');
 const accountValidator = require('../middlewares/accountValidator');
 const firestore = require('../models/firestore');
 
-router.get('/', [], async (req, res) => {
+router.get('/', [validateFirebaseToken], async (req, res) => {
     const accountsRef = FIRESTORE.collection('accounts');
     const snapshot = await accountsRef.get();
 
@@ -18,7 +18,7 @@ router.get('/', [], async (req, res) => {
     res.status(201).json(accounts);
 });
 
-router.get('/:UID', [], async (req, res) => {
+router.get('/:UID', [validateFirebaseToken], async (req, res) => {
     try {
         const accountsCollection = FIRESTORE.collection('accounts');
 

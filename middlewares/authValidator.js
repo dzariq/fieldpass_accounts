@@ -1,6 +1,8 @@
 function validateFirebaseToken(req, res, next) {
-    // console.log(req.headers["x-forwarded-authorization"])
-  
+    if(!req.headers["x-forwarded-authorization"])
+    {
+      res.status(401).json({ error: 'Unauthorized' });
+    }
     const idToken = req.headers["x-forwarded-authorization"].split(' ')[1]; // Extract JWT token from Authorization header
   
     FIREBASE_ADMIN.auth().verifyIdToken(idToken, true)
