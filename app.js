@@ -27,10 +27,12 @@ app.post('/', (req, res) => {
   }
   const firestore = require('./models/firestore');
   const data = req.body;
-  data = Buffer.from(data, 'base64').toString().trim()
+  // data = Buffer.from(data, 'base64').toString().trim()
 
   console.log('Received message:', data);
-  firestore.addDocument(data, 'accounts', data.UID)
+  console.log('Received message:', data.UID);
+
+  // firestore.addDocument(data, 'accounts', data.UID)
 
   // if (!req.body.message) {
   //   const msg = 'invalid Pub/Sub message format';
