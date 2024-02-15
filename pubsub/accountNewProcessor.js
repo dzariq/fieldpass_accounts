@@ -10,12 +10,11 @@ const subscription = pubsub.subscription(subscriptionName);
 // Handle message callback
 subscription.on('message', (message) => {
   // Extract body data
-
-  // Process the body data as needed
-  console.log('Received message:', JSON.parse(message.data));
   const data = JSON.parse(message.data)
+
+  console.log('Received message:',data);
+  console.log('UID: ',data.uid)
   firestore.addDocument(data, 'accounts', data.uid)
-  // Acknowledge the message to remove it from the subscription
   message.ack();
 });
 
