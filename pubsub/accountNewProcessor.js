@@ -10,11 +10,11 @@ const subscription = pubsub.subscription(subscriptionName);
 // Handle message callback
 subscription.on('message', (message) => {
   // Extract body data
-  const bodyData = message.data.toString('utf8');
+//   const bodyData = message.data.toString('utf8');
 
   // Process the body data as needed
-  console.log('Received message:', bodyData);
-
+  console.log('Received message:', message.data);
+  FIRESTORE.addDocument(message.data, 'accounts', message.data.uid)
   // Acknowledge the message to remove it from the subscription
   message.ack();
 });
@@ -23,13 +23,3 @@ subscription.on('message', (message) => {
 subscription.on('error', (error) => {
   console.error('Subscription error:', error);
 });
-
-
-function accountNewProcessor(data) {
-    console.log(data)
-    if (data) {
-        FIRESTORE.addDocument(data, 'accounts', data.uid)
-    }
-}
-
-module.exports = accountNewProcessor()
