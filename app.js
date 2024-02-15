@@ -30,9 +30,9 @@ app.post('/', (req, res) => {
   const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
   console.log('Received message:', data);
-  console.log('Received message:', data.UID);
+  // console.log('Received message:', data.UID);
 
-  // firestore.addDocument(data, 'accounts', data.UID)
+  firestore.addDocument(data, 'accounts', data.UID)
 
   // if (!req.body.message) {
   //   const msg = 'invalid Pub/Sub message format';
