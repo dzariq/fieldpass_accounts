@@ -4,7 +4,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
-const bodyParser = require('body-parser');
 
 //init service account google
 FIREBASE_ADMIN = require('firebase-admin');
@@ -22,11 +21,12 @@ app.use(bodyParser.json());
 //message events subscriptions
 app.post('/', (req, res) => {
   const firestore = require('./models/firestore');
+  const data = req.body.message;
+  data = Buffer.from(pubSubMessage.data, 'base64').toString().trim()
 
-  const message = req.body.message;
-
-  console.log('Received message:', message);
-  firestore.addDocument(message, 'accounts', message.uid)
+  console.log('Received message:', data);
+  const firestore = require('../models/firestore');
+  firestore.addDocument(data, 'accounts', data.UID)
 
   // if (!req.body.message) {
   //   const msg = 'invalid Pub/Sub message format';
