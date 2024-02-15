@@ -27,7 +27,7 @@ app.post('/', (req, res) => {
   }
   const firestore = require('./models/firestore');
   const dataRaw = req.body;
-  const data = Buffer.from(dataRaw.message.data, 'base64').toString().trim()
+  const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
   console.log('Received message:', data);
   console.log('Received message:', data.UID);
