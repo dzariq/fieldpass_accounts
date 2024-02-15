@@ -19,34 +19,21 @@ FIRESTORE = FIREBASE_ADMIN.firestore();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-//message events subscriptions
-app.post('/', (req, res) => {
-
-  if (!req.body) {
-    return;
-  }
-  const firestore = require('./models/firestore');
-  const dataRaw = req.body;
-  const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
-
-  console.log('Received message:', data);
-
-  firestore.addDocument(data, 'accounts', data.UID)
-
-  res.status(200).send('Message received successfully');
-
-});
-//message events subscriptions
-
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //api routes define here
 const clubsRouter = require('./routes/accounts');
 const rolesRouter = require('./routes/roles');
+const userRolesRouter = require('./routes/userRoles');
+const pubsubRouter = require('./routes/pubsubs');
+
+app.use('/pubsub', pubsubRouter);
 
 app.use('/accounts', clubsRouter);
 app.use('/roles', rolesRouter);
+app.use('/user-roles', userRolesRouter);
+
 //api routes define here
 
 module.exports = app;

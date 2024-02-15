@@ -5,6 +5,7 @@ const Role = sequelize.define('Role', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true
     },
     name: {
@@ -25,4 +26,22 @@ const Role = sequelize.define('Role', {
 });
 
 
-module.exports = Role;
+async function createOrUpdateAccount(name,model, operation) {
+    try {
+        const [role, created] = await Role.findOrCreate({
+            where: { name }, 
+            defaults: { model,operation }   
+        });
+
+        if (!created) {
+            await role.update({ operation,model });
+            return role.toJSON();
+        } else {
+            console.log('Role created:', role.toJSON());
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+module.exports = {Role,createOrUpdateAccount};

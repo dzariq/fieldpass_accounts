@@ -1,4 +1,4 @@
-async function addDocument(data,collection,docId) {
+async function addDocument(data, collection, docId) {
     try {
         console.log(data);
         await FIRESTORE.collection(collection).doc(docId).set(data);
@@ -9,22 +9,42 @@ async function addDocument(data,collection,docId) {
     }
 }
 
-async function updateDocument(data,collection,docId) {
+async function updateDocument(newData, collection, docId) {
     try {
-        const docRef = FIRESTORE.collection(collection).doc(docId);
+        // Specify the document path
+        const documentPath = collection+'/'+docId;
 
-        // await docRef.update({
-        //     field1: 'new_value1',
-        //     field2: 'new_value2',
-        // });
+        // Retrieve the document from Firestore
+        FIRESTORE
+            .doc(documentPath)
+            .get()
+            .then((doc) => {
+                if (!doc.exists) {
+                    console.log('Document does not exist');
+                    return;
+                }
 
-        console.log('Document updated successfully');
+                // Get the data of the existing document
+                const data = doc.data();
+
+                // Add the new field to the data
+                data.newField = newData;
+
+                // Write the updated data back to Firestore
+                return FIRESTORE.doc(documentPath).set(data, { merge: true });
+            })
+            .then(() => {
+                console.log('Field added successfully');
+            })
+            .catch((error) => {
+                console.error('Error adding field:', error);
+            });
     } catch (error) {
         console.error('Error updating document:', error);
     }
 }
 
-module.exports =  {
+module.exports = {
     addDocument,
     updateDocument
 };

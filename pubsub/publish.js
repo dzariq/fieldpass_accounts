@@ -14,7 +14,6 @@ async function publishMessage(topicName, data) {
       },
     });
     const topicNameFullString = 'projects/chatbot-401803/topics/'+topicName;
-
     const topic = pubsub.topic(topicNameFullString);
     const messageId = await topic.publish(Buffer.from(JSON.stringify(data)));
 
