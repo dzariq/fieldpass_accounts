@@ -39,7 +39,6 @@ router.get('/:UID', [], async (req, res) => {
 
 router.post('/', [validateFirebaseToken,accountValidator], (req, res) => {
     Account.createOrUpdateAccount(req.user.uid,req.user.email).then(account => {
-        console.log(account)
         publishMessage('account-new',account)
     });
     res.status(201).json({ message: 'Account created successfully' });

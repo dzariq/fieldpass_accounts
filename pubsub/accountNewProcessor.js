@@ -1,5 +1,5 @@
 const { PubSub } = require('@google-cloud/pubsub');
-
+const firestore = require('../models/firestore');
 // Initialize Pub/Sub client
 const pubsub = new PubSub();
 
@@ -15,7 +15,7 @@ subscription.on('message', (message) => {
   // Process the body data as needed
   console.log('Received message:', JSON.parse(message.data));
   const data = JSON.parse(bodyData)
-  FIRESTORE.addDocument(bodyData, 'accounts', bodyData.uid)
+  firestore.addDocument(bodyData, 'accounts', bodyData.uid)
   // Acknowledge the message to remove it from the subscription
   message.ack();
 });
