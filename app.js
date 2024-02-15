@@ -19,15 +19,15 @@ FIRESTORE = FIREBASE_ADMIN.firestore();
 
 //message events subscriptions
 app.post('/', (req, res) => {
-  if (!req.body.message) {
-    const msg = 'invalid Pub/Sub message format';
-    console.error(`error: ${msg}`);
-    res.status(400).send(`Bad Request: ${msg}`);
-    return;
-  }else{
-    accountNewProcessor(req.body.message)
-    res.status(200).send(`Success PubSub Received`);
-  }
+  // if (!req.body.message) {
+  //   const msg = 'invalid Pub/Sub message format';
+  //   console.error(`error: ${msg}`);
+  //   res.status(400).send(`Bad Request: ${msg}`);
+  //   return;
+  // }else{
+  //   accountNewProcessor(req.body.message)
+  //   res.status(200).send(`Success PubSub Received`);
+  // }
 });
 //message events subscriptions
 
