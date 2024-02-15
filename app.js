@@ -30,19 +30,11 @@ app.post('/', (req, res) => {
   const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
   console.log('Received message:', data);
-  // console.log('Received message:', data.UID);
 
   firestore.addDocument(data, 'accounts', data.UID)
 
-  // if (!req.body.message) {
-  //   const msg = 'invalid Pub/Sub message format';
-  //   console.error(`error: ${msg}`);
-  //   res.status(400).send(`Bad Request: ${msg}`);
-  //   return;
-  // }else{
-  //   accountNewProcessor(req.body.message)
-  //   res.status(200).send(`Success PubSub Received`);
-  // }
+  res.status(200).send('Message received successfully');
+
 });
 //message events subscriptions
 
