@@ -17,7 +17,6 @@ FIREBASE_ADMIN.initializeApp({
 FIRESTORE = FIREBASE_ADMIN.firestore();
 // require('./pubsub/accountNewProcessor');
 
-app.use(bodyParser.json());
 //message events subscriptions
 app.post('/', (req, res) => {
   const firestore = require('./models/firestore');
@@ -25,7 +24,6 @@ app.post('/', (req, res) => {
   data = Buffer.from(pubSubMessage.data, 'base64').toString().trim()
 
   console.log('Received message:', data);
-  const firestore = require('../models/firestore');
   firestore.addDocument(data, 'accounts', data.UID)
 
   // if (!req.body.message) {
