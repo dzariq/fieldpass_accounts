@@ -16,9 +16,12 @@ FIREBASE_ADMIN.initializeApp({
 //init service account google
 FIRESTORE = FIREBASE_ADMIN.firestore();
 // require('./pubsub/accountNewProcessor');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 //message events subscriptions
 app.post('/', (req, res) => {
+
   if (!req.body) {
     return;
   }
