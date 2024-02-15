@@ -4,9 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
-const bodyParser = require('body-parser');
-const { PubSub } = require('@google-cloud/pubsub');
-const pubsub = new PubSub();
+const accountNewProcessor = require('./pubsub/accountNewProcessor');
 
 //init service account google
 FIREBASE_ADMIN = require('firebase-admin');
@@ -18,18 +16,18 @@ FIREBASE_ADMIN.initializeApp({
 });
 //init service account google
 FIRESTORE = FIREBASE_ADMIN.firestore();
-app.use(bodyParser.json());
 
 //message events subscriptions
 app.post('/', (req, res) => {
-  if (!req.body) {
-    res.status(400).send('Bad Request: data is required');
+  if (!req.body.message) {
+    const msg = 'invalid Pub/Sub message format';
+    console.error(`error: ${msg}`);
+    res.status(400).send(`Bad Request: ${msg}`);
     return;
+  }else{
+    accountNewProcessor(req.body.message)
+    res.status(200).send(`Success PubSub Received`);
   }
-
-  const pubsubMessage = req.body;
-  console.log('Received message:', pubsubMessage);
-  accountNewProcessor(req.body)
 });
 //message events subscriptions
 
@@ -39,7 +37,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //api routes define here
 const clubsRouter = require('./routes/accounts');
 const rolesRouter = require('./routes/roles');
-const accountNewProcessor = require('./pubsub/accountNewProcessor');
 
 app.use('/accounts', clubsRouter);
 app.use('/roles', rolesRouter);
