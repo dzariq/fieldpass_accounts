@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
+const bodyParser = require('body-parser');
 
 //init service account google
 FIREBASE_ADMIN = require('firebase-admin');
@@ -21,10 +22,10 @@ app.use(bodyParser.json());
 //message events subscriptions
 app.post('/', (req, res) => {
   const firestore = require('./models/firestore');
+
   const message = req.body.message;
 
   console.log('Received message:', message);
-  const firestore = require('../models/firestore');
   firestore.addDocument(message, 'accounts', message.uid)
 
   // if (!req.body.message) {
