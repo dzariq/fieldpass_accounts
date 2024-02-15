@@ -4,6 +4,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
+const bodyParser = require('body-parser');
+const { PubSub } = require('@google-cloud/pubsub');
+const pubsub = new PubSub();
 
 //init service account google
 FIREBASE_ADMIN = require('firebase-admin');
@@ -15,25 +18,18 @@ FIREBASE_ADMIN.initializeApp({
 });
 //init service account google
 FIRESTORE = FIREBASE_ADMIN.firestore();
+app.use(bodyParser.json());
 
 //message events subscriptions
 app.post('/', (req, res) => {
-  console.log(req)
   if (!req.body) {
-    const msg = 'no Pub/Sub message received';
-    console.error(`error: ${msg}`);
-    res.status(400).send(`Bad Request: ${msg}`);
+    res.status(400).send('Bad Request: data is required');
     return;
   }
 
-  if (!req.body.message) {
-    const msg = 'invalid Pub/Sub message format';
-    console.error(`error: ${msg}`);
-    res.status(400).send(`Bad Request: ${msg}`);
-    return;
-  }else{
-    accountNewProcessor(req)
-  }
+  const pubsubMessage = req.body;
+  console.log('Received message:', pubsubMessage);
+  accountNewProcessor(req.body)
 });
 //message events subscriptions
 
