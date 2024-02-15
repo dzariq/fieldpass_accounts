@@ -15,10 +15,18 @@ FIREBASE_ADMIN.initializeApp({
 });
 //init service account google
 FIRESTORE = FIREBASE_ADMIN.firestore();
-require('./pubsub/accountNewProcessor');
+// require('./pubsub/accountNewProcessor');
 
+app.use(bodyParser.json());
 //message events subscriptions
 app.post('/', (req, res) => {
+  const firestore = require('./models/firestore');
+  const message = req.body.message;
+
+  console.log('Received message:', message);
+  const firestore = require('../models/firestore');
+  firestore.addDocument(message, 'accounts', message.uid)
+
   // if (!req.body.message) {
   //   const msg = 'invalid Pub/Sub message format';
   //   console.error(`error: ${msg}`);

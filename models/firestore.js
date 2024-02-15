@@ -1,6 +1,6 @@
 async function addDocument(data,collection,docId) {
     try {
-        console.log(docId);
+        console.log(data);
         await FIRESTORE.collection(collection).doc(docId).set(data);
 
         console.log('Document added successfully');

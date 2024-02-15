@@ -1,11 +1,11 @@
 function validateFirebaseToken(req, res, next) {
-    console.log(req.headers["x-forwarded-authorization"])
+    // console.log(req.headers["x-forwarded-authorization"])
   
     const idToken = req.headers["x-forwarded-authorization"].split(' ')[1]; // Extract JWT token from Authorization header
   
     FIREBASE_ADMIN.auth().verifyIdToken(idToken, true)
       .then(decodedToken => {
-        console.log(decodedToken);
+        // console.log(decodedToken);
         req.user = decodedToken;
         next();
       })

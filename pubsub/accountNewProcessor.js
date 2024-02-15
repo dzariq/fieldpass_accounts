@@ -13,8 +13,8 @@ subscription.on('message', (message) => {
   const data = JSON.parse(message.data)
 
   console.log('Received message:',data);
-  console.log('UID: ',data.uid)
   firestore.addDocument(data, 'accounts', data.uid)
+  // Acknowledge the message to remove it from the subscription
   message.ack();
 });
 
