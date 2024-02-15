@@ -19,6 +19,9 @@ FIRESTORE = FIREBASE_ADMIN.firestore();
 
 //message events subscriptions
 app.post('/', (req, res) => {
+  if (!req.body) {
+    return;
+  }
   const firestore = require('./models/firestore');
   const data = req.body;
   data = Buffer.from(data, 'base64').toString().trim()
