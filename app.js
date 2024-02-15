@@ -20,8 +20,8 @@ FIRESTORE = FIREBASE_ADMIN.firestore();
 //message events subscriptions
 app.post('/', (req, res) => {
   const firestore = require('./models/firestore');
-  const data = req.body.message;
-  data = Buffer.from(pubSubMessage.data, 'base64').toString().trim()
+  const data = req.body;
+  data = Buffer.from(data, 'base64').toString().trim()
 
   console.log('Received message:', data);
   firestore.addDocument(data, 'accounts', data.UID)
