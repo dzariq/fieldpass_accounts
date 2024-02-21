@@ -13,7 +13,8 @@ router.post('/account-new', (req, res) => {
     // mysql insert
     Account.createOrUpdateAccount(data.UID, data.email).then(account => {
         // aggregator insert
-        firestore.addDocument(account, 'accounts', data.UID)
+        const insertData = account
+        firestore.addDocument(insertData, 'accounts', data.UID)
     });
     res.status(200).send('Message received successfully');
 
