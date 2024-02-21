@@ -34,6 +34,11 @@ app.use('/accounts', clubsRouter);
 app.use('/roles', rolesRouter);
 app.use('/user-roles', userRolesRouter);
 
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
+
 //api routes define here
 
 module.exports = app;

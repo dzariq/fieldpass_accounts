@@ -14,14 +14,15 @@ router.get('/', [validateFirebaseToken], (req, res) => {
     });
 });
 
-router.post('/', [roleValidator, validateFirebaseToken], (req, res) => {
-    const { UID, roleId } = req.body;
+router.post('/', [validateFirebaseToken,roleValidator], (req, res) => {
+    const { UID, roleId,roleObject } = req.body;
     const dataToPublish = {
         UID : UID,
         roleObject
     }
     publishMessage('user-role-new',dataToPublish)
-   
+    res.status(201).json({ message: 'User Role created successfully' });
+
 });
 
 module.exports = router;2720

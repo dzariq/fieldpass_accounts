@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Account = require('../models/accounts');
+const firestore = require('../models/firestore');
 
 //message events subscriptions
 router.post('/account-new', (req, res) => {
-    const firestore = require('../models/firestore');
     const dataRaw = req.body;
     const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
@@ -24,7 +24,6 @@ router.post('/user-role-new', (req, res) => {
     if (!req.body) {
         return;
     }
-    const firestore = require('./models/firestore');
     const dataRaw = req.body;
     const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
