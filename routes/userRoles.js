@@ -18,7 +18,7 @@ router.post('/', [validateFirebaseToken,roleValidator], (req, res) => {
     const { UID, roleId,roleObject } = req.body;
     const dataToPublish = {
         UID : UID,
-        roleObject
+        user_roles : roleObject
     }
     publishMessage('user-role-new',dataToPublish)
     res.status(201).json({ message: 'User Role created successfully' });
