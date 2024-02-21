@@ -47,7 +47,7 @@ async function updateDocument(newData, collection, docId) {
 // Function to create or update a document
 const createOrUpdateDocument = async (data,collectionName, documentId) => {
     try {
-        const documentPath = collection+'/'+docId;
+        const documentPath = collectionName+'/'+documentId;
 
       // Use set with merge option to perform an upsert operation
       await FIRESTORE.doc(documentPath).set(data, { merge: true });
