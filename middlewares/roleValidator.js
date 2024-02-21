@@ -22,7 +22,7 @@ async function roleValidator(req, res, next) {
     req.body.accountObject = await Account.findOne({ where: { UID: req.body.UID } });
 
     // If row is not found, throw an error
-    if (!req.body.RoleObj) {
+    if (!req.body.roleObject) {
       const error = new Error(`Invalid Role`);
       error.status = 400; // Set the HTTP status code for the error (400 for Bad Request)
       return next(error); // Pass the error to the error-handling middleware
