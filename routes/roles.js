@@ -4,6 +4,7 @@ const Role = require('../models/roles');
 const validateFirebaseToken = require('../middlewares/authValidator')
 const publishMessage = require('../pubsub/publish');
 const roleValidator = require('../middlewares/roleValidator')
+const paramValidator = require('../middlewares/paramValidator')
 
 router.get('/', [validateFirebaseToken], (req, res) => {
     Role.Role.findAll().then((roles) => {
@@ -12,7 +13,7 @@ router.get('/', [validateFirebaseToken], (req, res) => {
     });
 });
 
-router.post('/', [roleValidator,paramValidator(['name','model','operation']), validateFirebaseToken], (req, res) => {
+router.post('/', [paramValidator(['name','model','operation']),roleValidator, validateFirebaseToken], (req, res) => {
     const { name, operation, model } = req.body;
     publishMessage('role-new', {
         UID: req.user.uid,
@@ -27,7 +28,7 @@ router.post('/', [roleValidator,paramValidator(['name','model','operation']), va
 });
 
 
-router.put('/', [roleValidator,paramValidator(['roleId','name','model','operation']), validateFirebaseToken], (req, res) => {
+router.put('/', [paramValidator(['roleId','name','model','operation']),roleValidator, validateFirebaseToken], (req, res) => {
     const { name, operation, model,roleId } = req.body;
     publishMessage('role-update', {
         UID: req.user.uid,
