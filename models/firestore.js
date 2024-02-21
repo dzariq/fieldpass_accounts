@@ -44,7 +44,19 @@ async function updateDocument(newData, collection, docId) {
     }
 }
 
+// Function to create or update a document
+const createOrUpdateDocument = async (data,collectionName, documentId) => {
+    try {
+      // Use set with merge option to perform an upsert operation
+      await db.collection(collectionName).doc(documentId).set(data, { merge: true });
+      console.log('Document created or updated successfully');
+    } catch (error) {
+      console.error('Error creating or updating document:', error);
+    }
+  };
+
 module.exports = {
     addDocument,
-    updateDocument
+    updateDocument,
+    createOrUpdateDocument
 };
