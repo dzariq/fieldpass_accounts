@@ -13,7 +13,7 @@ router.get('/', [validateFirebaseToken], (req, res) => {
     });
 });
 
-router.post('/', [paramValidator(['name','model','operation']),roleValidator, validateFirebaseToken], (req, res) => {
+router.post('/', [validateFirebaseToken,paramValidator(['name','model','operation']),roleValidator], (req, res) => {
     const { name, operation, model } = req.body;
     publishMessage('role-new', {
         UID: req.user.uid,
@@ -28,7 +28,7 @@ router.post('/', [paramValidator(['name','model','operation']),roleValidator, va
 });
 
 
-router.put('/', [paramValidator(['roleId','name','model','operation']),roleValidator, validateFirebaseToken], (req, res) => {
+router.put('/', [validateFirebaseToken,paramValidator(['roleId','name','model','operation']),roleValidator], (req, res) => {
     const { name, operation, model,roleId } = req.body;
     publishMessage('role-update', {
         UID: req.user.uid,
@@ -43,7 +43,7 @@ router.put('/', [paramValidator(['roleId','name','model','operation']),roleValid
     // });
 });
 
-router.delete('/', [roleValidator,paramValidator(['roleId']), validateFirebaseToken], (req, res) => {
+router.delete('/', [validateFirebaseToken,paramValidator(['roleId'],roleValidator)], (req, res) => {
     const { roleId } = req.body;
     publishMessage('role-delete', {
         UID: req.user.uid,
