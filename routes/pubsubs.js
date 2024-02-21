@@ -1,6 +1,6 @@
 const express = require('express');
-const { Account } = require('../models/accounts');
 const router = express.Router();
+const Account = require('../models/accounts');
 
 //message events subscriptions
 router.post('/account-new', (req, res) => {
