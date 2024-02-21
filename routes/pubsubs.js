@@ -3,8 +3,6 @@ const router = express.Router();
 
 //message events subscriptions
 router.post('/account-new', (req, res) => {
-        return;
-    }
     const firestore = require('./models/firestore');
     const dataRaw = req.body;
     const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
