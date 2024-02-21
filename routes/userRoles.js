@@ -3,9 +3,9 @@ const router = express.Router();
 const Account = require('../models/accounts');
 const Role = require('../models/roles');
 const validateFirebaseToken = require('../middlewares/authValidator')
-const roleValidator = require('../middlewares/roleValidator')
 const userRoleValidator = require('../middlewares/userRoleValidator');
 const publishMessage = require('../pubsub/publish');
+const validateParams = require('../middlewares/paramValidator');
 
 router.get('/', [validateFirebaseToken], (req, res) => {
     Role.Role.findAll().then((roles) => {
@@ -14,13 +14,24 @@ router.get('/', [validateFirebaseToken], (req, res) => {
     });
 });
 
-router.post('/', [validateFirebaseToken,roleValidator], (req, res) => {
-    const { UID, roleId,roleObject,accountObject} = req.body;
+router.post('/', [validateFirebaseToken,validateParams(['roleId']),userRoleValidator], (req, res) => {
+    const {roleObject} = req.body;
     const dataToPublish = {
-        UID : UID,
+        UID : req.user.uid,
         user_roles : [ roleObject ]
     }
     publishMessage('user-role-new',dataToPublish)
+    res.status(201).json({ message: 'User Role created successfully' });
+
+});
+
+router.delete('/', [validateFirebaseToken,validateParams(['roleId']),userRoleValidator], (req, res) => {
+    const {roleId} = req.body;
+    const dataToPublish = {
+        UID : req.user.uid,
+        roleId : roleId
+    }
+    publishMessage('user-role-delete',dataToPublish)
     res.status(201).json({ message: 'User Role created successfully' });
 
 });

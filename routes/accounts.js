@@ -6,6 +6,7 @@ const validateFirebaseToken = require('../middlewares/authValidator')
 const publishMessage = require('../pubsub/publish');
 const accountValidator = require('../middlewares/accountValidator');
 const firestore = require('../models/firestore');
+const paramValidator = require('../middlewares/paramValidator');
 
 router.get('/', [validateFirebaseToken], async (req, res) => {
     const accountsRef = FIRESTORE.collection('accounts');

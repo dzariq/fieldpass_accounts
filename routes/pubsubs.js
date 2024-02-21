@@ -21,7 +21,6 @@ router.post('/account-new', (req, res) => {
 });
 
 router.post('/user-role-new', (req, res) => {
-
     if (!req.body) {
         return;
     }
