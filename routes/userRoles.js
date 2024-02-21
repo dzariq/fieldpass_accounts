@@ -15,10 +15,11 @@ router.get('/', [validateFirebaseToken], (req, res) => {
 });
 
 router.post('/', [validateFirebaseToken,roleValidator], (req, res) => {
-    const { UID, roleId,roleObject } = req.body;
+    const { UID, roleId,roleObject,accountObject} = req.body;
     const dataToPublish = {
         UID : UID,
-        user_roles : roleObject
+        email : accountObject.email,
+        user_roles : [ roleObject ]
     }
     console.log(dataToPublish)
     publishMessage('user-role-new',dataToPublish)
