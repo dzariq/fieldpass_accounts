@@ -18,8 +18,8 @@ async function roleValidator(req, res, next) {
     }
 
     // Find the row by ID
-    req.body.RoleObj = await Role.findOne({ where: { id: req.body.roleId } });
-    req.body.AccountObj = await Account.findOne({ where: { UID: req.body.UID } });
+    req.body.roleObject = await Role.findOne({ where: { id: req.body.roleId } });
+    req.body.accountObject = await Account.findOne({ where: { UID: req.body.UID } });
 
     // If row is not found, throw an error
     if (!req.body.RoleObj) {
