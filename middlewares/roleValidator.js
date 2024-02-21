@@ -29,7 +29,7 @@ async function roleValidator(req, res, next) {
     }
 
     // If row is not found, throw an error
-    if (!req.body.AccountObj) {
+    if (!req.body.accountObject) {
       const error = new Error(`Invalid Account`);
       error.status = 400; // Set the HTTP status code for the error (400 for Bad Request)
       return next(error); // Pass the error to the error-handling middleware
