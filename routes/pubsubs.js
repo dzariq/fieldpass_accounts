@@ -14,7 +14,7 @@ router.post('/account-new', (req, res) => {
     Account.createOrUpdateAccount(data.UID, data.email).then(account => {
         // aggregator insert
         const insertData = account
-        firestore.addDocument(insertData, 'accounts', data.UID)
+        firestore.createOrUpdateAccount(insertData, 'accounts', data.UID)
     });
     res.status(200).send('Message received successfully');
 
@@ -30,7 +30,7 @@ router.post('/user-role-new', (req, res) => {
 
     console.log('Received message:', data);
 
-    firestore.addDocument(data, 'accounts', data.UID)
+    firestore.createOrUpdateAccount(data, 'accounts', data.UID)
 
     res.status(200).send('Message received successfully');
 
