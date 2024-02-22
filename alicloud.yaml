@@ -1,4 +1,5 @@
 ROSTemplateFormatVersion: "2023-02-22"
+edition: 1.0.0
 Resources:
   MyFunction:
     Type: 'Aliyun::Serverless::Function'
