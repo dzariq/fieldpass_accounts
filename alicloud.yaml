@@ -1,8 +1,23 @@
-edition: 3.0.0 
-name: fieldpass-accounts
-access: default 
+edition: 1.0.0        #  The version of the YAML syntax. The version complies with the semantic versioning specification.
+name: fieldpass-accounts       #  Project name
+access: xxx-account1  #  Alias of the key
 
-vars: 
-  Key: Value
+vars: # [Global variables for services]
+  logo: https://image.aliyun.com/xxxx.png
 
-actions: globalActions 
+actions: # Customize global execution logic
+  pre-deploy: # Run before the project deploy
+    - run: npm install # Command line to run
+      path: ./src # Path to run the command line
+  success-deploy: # Run after the project deploy succeeded
+    - plugin: dingding-robot # plugin to use
+      args: # Arguments for the plugin
+        key: value 
+  fail-deploy: # Run after the project deploy failed
+    - plugin: dingding-robot # plugin to use
+      args: # Arguments for the plugin
+        key: value 
+  complete-deploy: # Run after the project deploy complete
+    - plugin: dingding-robot # plugin to use
+      args: # Arguments for the plugin
+        key: value 
