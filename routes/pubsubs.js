@@ -36,6 +36,25 @@ router.post('/user-role-new', (req, res) => {
 
 });
 
+router.post('/user-role-delete', (req, res) => {
+    if (!req.body) {
+        return;
+    }
+    const dataRaw = req.body;
+    const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
+
+    console.log('Received message:', data);
+
+    firestore.searchObjectsInArray(data, 'accounts', data.UID).then(doc => {
+        const dataUpdate = {
+            'user_roles' : []
+        }
+        firestore.createOrUpdateDocument(dataUpdate, 'accounts', doc.uid).then(doc => {
+            res.status(200).send('Message received successfully');
+        });
+    })
+});
+
 router.post('/role-new', (req, res) => {
     if (!req.body) {
         return;
@@ -44,7 +63,7 @@ router.post('/role-new', (req, res) => {
     const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
     console.log('Received message:', data);
-    Role.createRole(data.name,data.model,data.operation).then(role => {
+    Role.createRole(data.name, data.model, data.operation).then(role => {
         res.status(200).send('Message received successfully');
     });
 
@@ -58,7 +77,7 @@ router.post('/role-update', (req, res) => {
     const data = JSON.parse(Buffer.from(dataRaw.message.data, 'base64').toString().trim())
 
     console.log('Received message:', data);
-    Role.updateRole(data.roleId, data.name,data.model,data.operation).then(role => {
+    Role.updateRole(data.roleId, data.name, data.model, data.operation).then(role => {
         res.status(200).send('Message received successfully');
     });
 

@@ -36,5 +36,5 @@ router.delete('/', [validateFirebaseToken,validateParams(['roleId']),userRoleVal
 
 });
 
-module.exports = router;2720
+module.exports = router;
 

@@ -12,7 +12,7 @@ async function addDocument(data, collection, docId) {
 async function updateDocument(newData, collection, docId) {
     try {
         // Specify the document path
-        const documentPath = collection+'/'+docId;
+        const documentPath = collection + '/' + docId;
 
         // Retrieve the document from Firestore
         FIRESTORE
@@ -45,20 +45,35 @@ async function updateDocument(newData, collection, docId) {
 }
 
 // Function to create or update a document
-const createOrUpdateDocument = async (data,collectionName, documentId) => {
+const createOrUpdateDocument = async (data, collectionName, documentId) => {
     try {
-        const documentPath = collectionName+'/'+documentId;
+        const documentPath = collectionName + '/' + documentId;
 
-      // Use set with merge option to perform an upsert operation
-      await FIRESTORE.doc(documentPath).set(data, { merge: true });
-      console.log('Document created or updated successfully');
+        // Use set with merge option to perform an upsert operation
+        await FIRESTORE.doc(documentPath).set(data, { merge: true });
+        console.log('Document created or updated successfully');
     } catch (error) {
-      console.error('Error creating or updating document:', error);
+        console.error('Error creating or updating document:', error);
     }
-  };
+};
+
+async function searchObjectsInArray(objectId,collectionName) {
+    try {
+        const snapshot = await db.collection(collectionName)
+            .where('roleId', '==', objectId)
+            .get();
+
+        snapshot.forEach((doc) => {
+            console.log(doc.id, ' => ', doc.data());
+        });
+    } catch (error) {
+        console.error('Error searching objects:', error);
+    }
+}
 
 module.exports = {
     addDocument,
     updateDocument,
-    createOrUpdateDocument
+    createOrUpdateDocument,
+    searchObjectsInArray
 };
