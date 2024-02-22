@@ -32,7 +32,7 @@ router.delete('/', [validateFirebaseToken,validateParams(['roleId']),userRoleVal
         roleId : roleId
     }
     publishMessage('user-role-delete',dataToPublish)
-    res.status(201).json({ message: 'User Role created successfully' });
+    res.status(201).json({ message: 'User Role deleted successfully' });
 
 });
 
