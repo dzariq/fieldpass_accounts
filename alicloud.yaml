@@ -1,9 +1,23 @@
-edition: 1.0.0
-function:    
-  name: fieldpass-accounts
-  description: this is a test    
-  runtime: nodejs12    
-  codeUri: ./    
-  handler: index.handler    
-  memorySize: 128    
-  timeout: 60
+service: fieldpass-accounts
+
+provider:
+  name: aliyun
+  runtime: nodejs14
+  credentials: ~/.aliyun_credentials # path must be absolute
+
+plugins:
+  - serverless-aliyun-function-compute
+
+package:
+  exclude:
+    - package-lock.json
+    - .gitignore
+    - .git/**
+
+functions:
+  hello:
+    handler: index.hello
+    events:
+      - http:
+          path: /foo
+          method: get
